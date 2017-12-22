@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.properties"></properties>
+
+    <settings>
+        <!-- 自动映射等级 NONE, PARTIAL, FULL，默认PARTIAL，如果强制开启自动映射 autoMapper="true"则此设置无效 -->
+        <setting name="autoMappingBehavior" value="PARTIAL"/>
+    </settings>
+
+    <typeAliases>
+        <package name="top.ruix.entity"/>
+    </typeAliases>
+
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="dialect" value="mysql"/>
+            <property name="offsetAsPageNum" value="false"/>
+            <property name="rowBoundsWithCount" value="false"/>
+            <property name="pageSizeZero" value="true"/>
+            <property name="reasonable" value="false"/>
+            <property name="supportMethodsArguments" value="false"/>
+            <property name="returnPageInfo" value="none"/>
+        </plugin>
+    </plugins>
+
+    <environments default="development"> <!-- 配置多个环境 default默认环境的id -->
+        <environment id="development"> <!-- 环境 -->
+            <transactionManager type="JDBC"/> <!-- 事务管理 type有JDBC、MANAGED -->
+            <dataSource type="POOLED"> <!-- 数据源 type有UNPOOLED、POOLED、JNDI -->
+                <!-- JDBC驱动 -->
+                <property name="driver" value="${driver}"/>
+                <!-- 连接字符串 -->
+                <property name="url" value="${url}"/>
+                <!-- 数据库用户名 -->
+                <property name="username" value="${username}"/>
+                <!-- 数据库密码 -->
+                <property name="password" value="${password}"/>
+                <!-- 在任意时间可以存在的活动（也就是正在使用）连接数量，默认值：10 -->
+                <property name="poolMaximumActiveConnections" value="10"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="top\ruix\dao\UserDaoMapper.xml"/>
+    </mappers>
+</configuration>
